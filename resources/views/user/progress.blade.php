@@ -7,7 +7,7 @@
     <table>
         <tr>
             <td>
-                <img class="profileImg" src="{{ auth()->user()->profile_image ? asset('storage/' . auth()->user()->profile_image) : asset('storage/default.png') }}" alt="プロフィール画像">
+                <img class="profileImg" src="{{ auth()->user()->profile_image ? asset('storage/' . auth()->user()->profile_image) : asset('images\default.png') }}" alt="プロフィール画像">
             </td>
             <td>
                 <h2>{{ $user->name }}の授業進捗</h2>

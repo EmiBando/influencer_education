@@ -1,0 +1,239 @@
+/* スタイル */
+.ContentsArea {
+    padding-left: 40px; /* コンテンツエリアの左側に40pxのパディングを適用 */
+}
+
+.MainContents {
+    margin-top: 40px; /* メインコンテンツの上部に40pxのマージンを適用 */
+    margin-left: 25px; /* メインコンテンツの左側に25pxのマージンを適用 */
+}
+
+.ArticlesIndex {
+    padding-right: 70px; /* 記事インデックス項目の右側に70pxのパディングを適用 */
+}
+
+.MainContents th, .MainContents td {
+    text-align: left; /* テーブルヘッダーとセルのテキストを左寄せに設定 */
+    padding-top: 7px; /* テーブルヘッダーとセルの上部に7pxのパディングを適用 */
+}
+
+.LinkBtn {
+    display: inline-block; /* リンクボタンをインラインブロック要素として表示 */
+    width: 65px; /* リンクボタンの幅を65pxに設定 */
+    padding: 10px 20px; /* リンクボタンの内側に上下10px、左右20pxのパディングを適用 */
+    color: white; /* リンクボタンの文字色を白に設定 */
+    background-color: #169398; /* リンクボタンの背景色を指定色に設定 */
+    border-radius: 5px; /* リンクボタンの角を5pxの半径で丸める */
+    text-decoration: none; /* リンクの下線を無効化 */
+}
+
+.DeleteBtn {
+    width: 110px; /* 削除ボタンの幅を110pxに設定 */
+    margin-left: 12px; /* 削除ボタンの左側に12pxのマージンを適用 */
+    color: white; /* 削除ボタンの文字色を白に設定 */
+    background-color: #ff0000; /* 削除ボタンの背景色を赤に設定 */
+    border: none; /* 削除ボタンの境界線を無効化 */
+    padding: 12px 20px; /* 削除ボタンの内側に上下12px、左右20pxのパディングを適用 */
+    border-radius: 5px; /* 削除ボタンの角を5pxの半径で丸める */
+}
+/* from */
+.ArticlesFormTable {
+    width: 700px;
+}
+
+.ArticlesFormLabel {
+    width: 100px;
+    vertical-align: top; 
+    white-space: nowrap; 
+}
+
+.ArticlesFormInput input[type="date"],
+.ArticlesFormInput input[type="text"] {
+    width: 100%; 
+}
+
+.ArticlesFormInput textarea {
+    width: 100%;
+    height:150px;
+    resize: vertical;
+}
+
+.FormSubmitBtn {
+    display: block; /* ボタンをブロックレベル要素として表示 */
+    width: 150px; /* ボタンの幅を100pxに設定 */
+    margin-top: 20px; /* ボタンの上部に20pxのマージンを設定 */
+    margin-left: 250px; /* ボタンの左側に80pxのマージンを設定 */
+    border: none; /* ボタンの境界線をなくす */
+    color: white; /* ボタンのテキスト色を白に設定 */
+    background-color: rgb(56, 56, 56); /* ボタンの背景色を指定 */
+    cursor: pointer; /* マウスカーソルをポインターに変更 */
+}
+
+.UserArticleTitle{
+    margin-bottom:30px; /* 記事のタイトル下に30pxのマージンを設定 */
+}
+
+/* プロフィール画像エリアを横並びに表示するためのスタイル */
+.ProfileImageArea {
+    display: flex;
+    align-items: flex-start; /* アイテムを上端で揃える */
+    gap: 20px; /* アイテム間のギャップを20pxに設定 */
+    margin-bottom:30px;
+}
+
+.ProfileImageWrapper {
+    display: flex;
+    flex-direction: column; /* 子要素を縦並びに配置 */
+    align-items: center; /* 子要素を中央揃えに */
+    gap: 10px; /* 子要素間のギャップを10pxに設定 */
+}
+
+.ProfileImg {
+    width: 100px; /* 適宜調整 */
+    height: 130px; /* 適宜調整 */
+    padding: 10px;
+    object-fit: cover; /* 画像のアスペクト比を保持 */
+}
+
+.ProfileFormGroupBtn {
+    border: 1px solid #cccccc; /* ファイル選択ボタンの境界線を灰色で1px設定 */
+    padding: 3px; /* 内側にパディングを設定 */
+    font-size: 14px;
+}
+
+/* プロフィール変更ページ用スタイル */
+.ProfileArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.ProfileForm {
+    width: 100%;
+    max-width: 500px; /* フォームの最大幅を設定 */
+}
+
+.ProfileFormGroup {
+    margin-bottom: 8px; /* ラベルの下に5pxのマージンを設定 */
+    width: 600px; /* ラベルの下に5pxのマージンを設定 */
+}
+
+.ProfileFormGroup input[type="text"],
+.ProfileFormGroup input[type="email"] {
+    width: 100%; /* 幅に設定 */
+}
+
+.ProfileFormGroup textarea {
+    height: 150px; /* 高さを調整 */
+}
+
+.ProfileFormGroup .BtnSecondary,
+.ProfileFormGroup .BtnPrimary {
+    display: inline-block; /* インラインブロック要素として表示 */
+    padding: 10px 20px; /* パディングを上下10px、左右20pxに設定 */
+    color: white; /* テキスト色を白に設定 */
+    text-align: center; /* テキストを中央揃えに */
+    text-decoration: none; /* テキストの下線をなくす */
+    border-radius: 5px; /* 角を5pxで丸くする */
+    cursor: pointer; /* カーソルをポインターに設定 */
+}
+.ProfileFormGroupLabel {
+    width: 180px;
+}
+
+.BtnSecondary {
+    background-color: #169398; /* ボタンの背景色を設定 */
+    margin-right: 10px; /* マージンを設定 */
+}
+
+.BtnPrimary {
+    background-color: #ff8800; /* ボタンの背景色を設定 */
+    margin-top: 40px;
+    margin-left: 270px;
+    width: 150px; /* ボタンの幅を設定 */
+    color:aliceblue;
+    border: none;
+}
+
+.PasswordChangeForme{
+    margin-left:100px;
+    width:700px;
+}
+
+.PasswordChangeFormeBtn{
+    background-color: #ff8800; /* ボタンの背景色を設定 */
+    margin-top: 100px;
+    margin-left:400px;
+    width: 150px; /* ボタンの幅を設定 */
+    color:aliceblue;
+    border: none;
+}
+
+.PasswordChangeFormeLabel{
+    width: 230px;
+}
+
+.PasswordChangeForme tr{
+    height: 50px;
+}
+
+.PasswordChangeForme input[type="password"] {
+    width: 100%; /* 幅に設定 */
+}
+
+/* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+ */
+ .GradeProgress {
+    width: 250px;
+    float: left;
+    margin-bottom: 50px;
+}
+
+.ProgressArea {
+    margin-top: 30px;
+    margin-left: 80px;
+    width: 800px;
+}
+
+.FlagArea{
+    width:50px;
+    color: red;
+    font-size: 14px;
+}
+
+.GradeStyle{
+    padding: 1px 10px;
+    border-radius: 5px;
+    border-color: gray;
+    color: white;
+}
+
+/* ID 1-6に赤色の背景を適用 */
+[data-grade-id='1'] .GradeStyle,
+[data-grade-id='2'] .GradeStyle,
+[data-grade-id='3'] .GradeStyle,
+[data-grade-id='4'] .GradeStyle,
+[data-grade-id='5'] .GradeStyle,
+[data-grade-id='6'] .GradeStyle {
+    background-color: rgb(0, 238, 255);
+}
+
+/* ID 7-9に青色の背景を適用 */
+[data-grade-id='7'] .GradeStyle,
+[data-grade-id='8'] .GradeStyle,
+[data-grade-id='9'] .GradeStyle {
+    background-color: rgb(0, 255, 191);
+}
+
+/* ID 10-12に緑色の背景を適用 */
+[data-grade-id='10'] .GradeStyle,
+[data-grade-id='11'] .GradeStyle,
+[data-grade-id='12'] .GradeStyle {
+    background-color: rgb(0, 255, 106);
+}
+
+.ProgressLink {
+    text-decoration: none;
+    color: black;
+}

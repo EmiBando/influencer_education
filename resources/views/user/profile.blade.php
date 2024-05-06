@@ -15,7 +15,7 @@
 
             <div class="ProfileImageArea">
                 <div class="ProfileImageWrapper">
-                    <img class="ProfileImg" id="currentProfileImage" src="{{ auth()->user()->profile_image ? asset('storage/' . auth()->user()->profile_image) : asset('storage/profile_images/default.png') }}" alt="プロフィール画像">
+                    <img class="ProfileImg" id="currentProfileImage" src="{{ auth()->user()->profile_image ? asset('storage/' . auth()->user()->profile_image) : asset('storage/default.png') }}" alt="プロフィール画像">
                 </div>
                 <div class="ProfileFormGroup">
                 <h2><label for="profileImage">プロフィール画像</label></h2>

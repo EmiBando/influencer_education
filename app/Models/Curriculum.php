@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Curriculum extends Model
 {
-    //use HasFactory;
-    //protected $fillable = ['title', 'description', 'created_at'];
+    protected $table = 'curriculums';
 
     public function userTimetable() {
         $curriculums = DB::table('curriculums')->get();

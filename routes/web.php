@@ -6,56 +6,34 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CurriculumController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-//ユーザー用トップページ
-Route::get('/user_top', function () {
-    return view('user_top');
-});
+Route::get('/', function () { return view('welcome'); });
 
 //ユーザー用時間割ページ
-Route::get('/user_timetable', function () {
-    return view('user_timetable');
-})->name('user_timetable');
+Route::get('/user_timetable', [CurriculumController::class, 'userTimetable'])->name('user_timetable');
+
+//ユーザー用トップページ
+Route::get('/user_top', function () { return view('user_top'); });
 
 //ユーザー用授業進捗ページ
-Route::get('/user_progress', function () {
-    return view('user_progress');
-})->name('user_progress');
+Route::get('/user_progress', function () { return view('user_progress'); })->name('user_progress');
 
 //ユーザー用プロフィール設定ページ
-Route::get('/user_profile', function () {
-    return view('user_profile');
-})->name('user_profile');
-Auth::routes();
+Route::get('/user_profile', function () { return view('user_profile'); })->name('user_profile'); Auth::routes();
 
 //管理用トップページ
-Route::get('/admin_top', function () {
-    return view('admin_top');
-});
+Route::get('/admin_top', function () { return view('admin_top'); });
 
 //管理用授業管理ページ
-Route::get('/admin_class', function () {
-    return view('admin_class');
-})->name('admin_class');
+Route::get('/admin_class', function () { return view('admin_class'); })->name('admin_class');
 
 //管理用お知らせ管理ページ
-Route::get('/admin_news', function () {
-    return view('admin_news');
-})->name('admin_news');
+Route::get('/admin_news', function () { return view('admin_news'); })->name('admin_news');
 
 //管理用バナー管理ページ
-Route::get('/admin_banner', function () {
-    return view('admin_banner');
-})->name('admin_banner');
-Auth::routes();
+Route::get('/admin_banner', function () { return view('admin_banner'); })->name('admin_banner'); Auth::routes();
 
 //ユーザー用ページでログイン後にユーザーが user_top.blade.php にリダイレクトされるようにする
 Route::get('/user_top', [UserController::class, 'userTop'])->name('user_top');
-
-Route::get('/user_timetable', [CurriculumController::class, 'userTimetable'])->name('user_timetable');
 
 //管理用ページでログイン後にユーザーが admin_top.blade.php にリダイレクトされるようにする
 Route::get('/admin_top', [AdminController::class, 'adminTop'])->name('admin_top');

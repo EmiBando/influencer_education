@@ -1,0 +1,8 @@
+#login_btn,#register_btn{
+  background-color: coral;
+  width:160px;
+  border-radius: 1px;
+  font-size: 30px;
+  padding-top: 0PX;
+  padding-bottom: 0PX;
+}

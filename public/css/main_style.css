@@ -1,0 +1,68 @@
+.content{
+  margin:20px;
+}
+.flg_btn{
+  display: inline-block;
+  text-align: center;
+}
+.grade{
+  height:40px;
+  margin-top:20px;
+}
+.grade-icon{
+  display: inline;
+  border-radius: 15px;
+  background-color:rgb(173, 211, 244);
+  padding:10px 20px;
+  color: white;
+}
+
+.logout-btn{
+  border: none;
+  background: transparent;
+}
+#main_head{
+  background-color: coral;
+}
+.nav-btn{
+  border-radius: 8px;
+  border: none;
+  background-color:#449197;
+  color: white;
+}
+.return-btn{
+  border: none;
+  background-color:white;
+  font-size: 20px;
+}
+img{
+  height:400px;
+  width:100%;
+}
+td{
+  padding-right: 40px;
+}
+.swiper-container{
+  margin:0 100px;
+}
+.swiper-pagination{
+  height:10px;
+  bottom:220px !important;
+}
+.movie{
+  display: inline-block;
+}
+.news-wrapper{
+  margin:50px 100px;
+}
+.news-lists{
+  border:1px solid gray;
+}
+#attendance{
+  border-radius: 20px;
+  border: none;
+  background-color:coral;
+  color :white;
+  font-size: 20px;
+  padding:10px 30px;
+}

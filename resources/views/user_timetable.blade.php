@@ -1,37 +1,3 @@
-<!-- 現在エラー解決のための仮のページレイアウトにしています -->
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Timetable</title>
-</head>
-<body>
-    <h1>User Timetable</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>タイトル</th>
-                <th>学年ID</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($curriculums as $curriculum)
-            <tr>
-                <td>{{ $curriculum->id }}</td>
-                <td>{{ $curriculum->title }}</td>
-                <td>{{ $curriculum->grade_id }}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-</body>
-</html>
-
-
-<!-- 下記がもともと制作していたレイアウトです -->
 @extends('user_app')
 
 @section('content')
@@ -40,11 +6,14 @@
             <div class="text-left">
                 <a style="color: black; font-size: 24px; text-decoration: none;" href="{{ url('/user_top') }}">←戻る</a>
             </div>
-            <div class="schedule-container text-center"> <!-- text-center を追加 -->
-                <div class="year-month-display" id="yearMonthDisplay">
+            <div class="schedule-container text-center">
+                <div class="year-month-display d-flex align-items-center justify-content-center" id="yearMonthDisplay">
                     <span id="prevYearMonth" style="font-size: 24px;">&lt;</span>
-                    <span id="currentYearMonth" style="font-size: 24px;">2023年7月</span>
+                    <span id="currentYearMonth" style="font-size: 24px; margin: 0 20px;">2024年7月</span>
                     <span id="nextYearMonth" style="font-size: 24px;">&gt;</span>
+                    <a href="{{ route('showCurriculumByGrade', ['gradeId' => $currentGrade->id]) }}" class="btn btn-secondary ml-4 current-grade-btn">
+                        {{ $currentGrade->name }}のカリキュラム
+                    </a>
                 </div>
                 <div style="margin-bottom: 50px;"></div>
             </div>
@@ -52,96 +21,37 @@
     </div>
     <div class="row justify-content-center text-center">
         <div class="col-lg-2 text-center">
-            <div class="col-sm-12"> <!-- ボタンを縦に配置する列 -->
+            <div class="col-sm-12">
                 <div class="btn-group-vertical">
-                    <a href="#" class="btn btn-primary" style="margin-bottom: 20px; background-color: #00FFFF; border-color: #7d7d7d; border-radius: 20px;">小学１年生</a>
-                    <a href="#" class="btn btn-primary" style="margin-bottom: 20px; background-color: #00FFFF; border-color: #7d7d7d; border-radius: 20px;">小学２年生</a>
-                    <a href="#" class="btn btn-primary" style="margin-bottom: 20px; background-color: #00FFFF; border-color: #7d7d7d; border-radius: 20px;">小学３年生</a>
-                    <a href="#" class="btn btn-primary" style="margin-bottom: 20px; background-color: #00FFFF; border-color: #7d7d7d; border-radius: 20px;">小学４年生</a>
-                    <a href="#" class="btn btn-primary" style="margin-bottom: 20px; background-color: #00FFFF; border-color: #7d7d7d; border-radius: 20px;">小学５年生</a>
-                    <a href="#" class="btn btn-primary" style="margin-bottom: 20px; background-color: #00FFFF; border-color: #7d7d7d; border-radius: 20px;">小学６年生</a>
-                    <a href="#" class="btn btn-primary" style="margin-bottom: 20px; background-color: #00bfff; border-color: #7d7d7d; border-radius: 20px;">中学１年生</a>
-                    <a href="#" class="btn btn-primary" style="margin-bottom: 20px; background-color: #00bfff; border-color: #7d7d7d; border-radius: 20px;">中学２年生</a>
-                    <a href="#" class="btn btn-primary" style="margin-bottom: 20px; background-color: #00bfff; border-color: #7d7d7d; border-radius: 20px;">中学３年生</a>
-                    <a href="#" class="btn btn-primary" style="margin-bottom: 20px; background-color: #7fff00; border-color: #7d7d7d; border-radius: 20px;">高校１年生</a>
-                    <a href="#" class="btn btn-primary" style="margin-bottom: 20px; background-color: #7fff00; border-color: #7d7d7d; border-radius: 20px;">高校２年生</a>
-                    <a href="#" class="btn btn-primary" style="margin-bottom: 20px; background-color: #7fff00; border-color: #7d7d7d; border-radius: 20px;">高校３年生</a>
+                    @foreach ($grades as $grade)
+                        <a href="{{ route('showCurriculumByGrade', ['gradeId' => $grade->id]) }}" class="btn btn-primary {{ $grade->id == $currentGrade->id ? 'active' : '' }}" style="margin-bottom: 20px; background-color: #00FFFF; border-color: #7d7d7d; border-radius: 20px;">
+                            {{ $grade->name }}
+                        </a>
+                    @endforeach
                 </div>
             </div>
         </div>
 
         <div class="col-lg-10">
-            <div class="row justify-content-center">
-                <div class="col-sm-3 mb-5 mr-3">
-                    <div class="border p-3 h-100">
-                        <img src="画像のURL" alt="画像の説明" class="img-fluid">
-                        <h2 class="mt-3 mb-2" style="font-size: 20px;">授業タイトル</h2>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
+            <div class="row justify-content-center" id="curriculumContainer">
+                @foreach($curriculums as $curriculum)
+                    <div class="col-sm-4 mb-5 mr-3">
+                        <div class="border p-3 h-100">
+                            <img src="画像のURL" alt="画像の説明" class="img-fluid">
+                            <h2 class="mt-3 mb-2" style="font-size: 20px;">{{ $curriculum->title }}</h2>
+                            @foreach($curriculum->deliveryTimes as $deliveryTime)
+                                <p class="mb-0">{{ $deliveryTime->delivery_from }} ~ {{ $deliveryTime->delivery_to }}</p>
+                            @endforeach
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-3 mb-5 mr-3">
-                    <div class="border p-3 h-100">
-                        <img src="画像のURL" alt="画像の説明" class="img-fluid">
-                        <h2 class="mt-3 mb-2" style="font-size: 20px;">授業タイトル</h2>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                    </div>
-                </div>
-                <div class="col-sm-3 mb-5 mr-3">
-                    <div class="border p-3 h-100">
-                        <img src="画像のURL" alt="画像の説明" class="img-fluid">
-                        <h2 class="mt-3 mb-2" style="font-size: 20px;">授業タイトル</h2>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-sm-3 mb-5 mr-3">
-                    <div class="border p-3 h-100">
-                        <img src="画像のURL" alt="画像の説明" class="img-fluid">
-                        <h2 class="mt-3 mb-2" style="font-size: 20px;">授業タイトル</h2>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                    </div>
-                </div>
-                <div class="col-sm-3 mb-5 mr-3">
-                    <div class="border p-3 h-100">
-                        <img src="画像のURL" alt="画像の説明" class="img-fluid">
-                        <h2 class="mt-3 mb-2" style="font-size: 20px;">授業タイトル</h2>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                    </div>
-                </div>
-                <div class="col-sm-3 mb-5 mr-3">
-                    <div class="border p-3 h-100">
-                        <img src="画像のURL" alt="画像の説明" class="img-fluid">
-                        <h2 class="mt-3 mb-2" style="font-size: 20px;">授業タイトル</h2>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                        <p class="mb-0">7月13日  14:00~15:00</p>
-                    </div>
-                </div>
-
+                @endforeach
             </div>
         </div>
     </div>
 
     <script>
-        const yearMonths = ["2023年1月", "2023年2月", "2023年3月", "2023年4月", "2023年5月", "2023年6月", "2023年7月", "2023年8月", "2023年9月", "2023年10月", "2023年11月", "2023年12月"];
-        let currentYearMonthIndex = 6; // 7月を初期表示に設定
+        const yearMonths = ["2024年1月", "2024年2月", "2024年3月", "2024年4月", "2024年5月", "2024年6月", "2024年7月", "2024年8月", "2024年9月", "2024年10月", "2024年11月", "2024年12月"];
+        let currentYearMonthIndex = 6; // 7月からスタート
 
         const currentYearMonthDisplay = document.getElementById("currentYearMonth");
         const prevYearMonthBtn = document.getElementById("prevYearMonth");
@@ -154,17 +64,59 @@
         function goToPreviousYearMonth() {
             currentYearMonthIndex = (currentYearMonthIndex === 0) ? 11 : currentYearMonthIndex - 1;
             updateYearMonthDisplay();
+            updateSchedule();
         }
 
         function goToNextYearMonth() {
             currentYearMonthIndex = (currentYearMonthIndex === 11) ? 0 : currentYearMonthIndex + 1;
             updateYearMonthDisplay();
+            updateSchedule();
+        }
+
+        function updateSchedule() {
+            const yearMonth = yearMonths[currentYearMonthIndex];
+            const gradeId = {{ $currentGrade->id }};
+
+            fetch('{{ route("getSchedule") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ date: yearMonth, gradeId: gradeId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const curriculumContainer = document.getElementById("curriculumContainer");
+                curriculumContainer.innerHTML = '';
+
+                data.curriculums.forEach(curriculum => {
+                    const curriculumDiv = document.createElement('div');
+                    curriculumDiv.className = 'col-sm-4 mb-5 mr-3';
+                    curriculumDiv.innerHTML = `
+                        <div class="border p-3 h-100">
+                            <img src="画像のURL" alt="画像の説明" class="img-fluid">
+                            <h2 class="mt-3 mb-2" style="font-size: 20px;">${curriculum.title}</h2>
+                            ${curriculum.deliveryTimes.map(time => `<p class="mb-0">${time.delivery_from} ~ ${time.delivery_to}</p>`).join('')}
+                        </div>
+                    `;
+                    curriculumContainer.appendChild(curriculumDiv);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         }
 
         prevYearMonthBtn.addEventListener("click", goToPreviousYearMonth);
         nextYearMonthBtn.addEventListener("click", goToNextYearMonth);
 
-        // 初期表示の年月を設定
         updateYearMonthDisplay();
     </script>
+
+    <style>
+        .current-grade-btn {
+            margin-left: 20px;
+        }
+    </style>
 @endsection

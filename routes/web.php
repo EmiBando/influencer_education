@@ -10,7 +10,8 @@ Route::get('/', function () { return view('welcome'); });
 
 //ユーザー用時間割ページ
 Route::get('/user_timetable', [CurriculumController::class, 'userTimetable'])->name('user_timetable');
-
+Route::get('/user_timetable/grade/{gradeId}', [CurriculumController::class, 'showCurriculumByGrade'])->name('showCurriculumByGrade');
+Route::post('/getSchedule', [CurriculumController::class, 'getSchedule'])->name('getSchedule');
 //ユーザー用トップページ
 Route::get('/user_top', function () { return view('user_top'); });
 

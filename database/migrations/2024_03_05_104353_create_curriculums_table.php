@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('thumbnail');
             $table->text('description');
             $table->text('video_url');
-            $table->integer('always_delivery_flg');
+            $table->tinyInteger('alway_delivery_flg');
             $table->foreignId('grade_id')->constrained('grades');
             $table->timestamps();
         });

@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="ContentsArea">
+    <a href="javascript:history.back()" class="TempBackButton">←戻る</a><!-- 佐藤：仮設定戻るボタン -->
     <h1>お知らせ一覧</h1>
 
     <a class="LinkBtn" href="{{ route('admin.articles.create') }}">新規登録</a>

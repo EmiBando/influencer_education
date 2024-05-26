@@ -65,11 +65,12 @@ class User extends Authenticatable
     {
         return Validator::make($data, [
             'name' => 'required|string|max:255',
-            'nameKana' => 'required|string|max:255',
+            'nameKana' => 'required|string|max:255|regex:/^[ァ-ヶー\s]+$/u',
             'email' => 'required|string|email|max:255|unique:users,email,' . $userId,
         ], [
             'name.required' => 'ユーザーネームは必須です。',
             'nameKana.required' => 'カナは必須です。',
+            'nameKana.regex' => 'カナはカタカナで入力してください。',
             'email.required' => 'メールアドレスは必須です。',
             'email.email' => '正しいメールアドレスを入力してください。',
             'email.unique' => 'このメールアドレスは既に登録されています。',

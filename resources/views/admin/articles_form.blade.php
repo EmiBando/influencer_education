@@ -1,13 +1,12 @@
 @extends('admin.adomi_header')
 
 @section('content')
-
     <div class="ContentsArea">
         <script src="{{ asset('js/formValidation.js') }}"></script>
         <div hidden id="validationErrors">{{ json_encode($errors->all()) }}</div>
 
         <div class="ContentsArea">
-
+            <a href="{{ route('admin.articles.index') }}" class="TempBackButton">←戻る</a>
             <h1>{{ $article->exists ? 'お知らせ変更' : 'お知らせ新規登録' }}</h1>
             <div class="MainContents">
                 <form action="{{ $article->exists ? route('admin.articles.update', $article->id) : route('admin.articles.store') }}" method="POST">

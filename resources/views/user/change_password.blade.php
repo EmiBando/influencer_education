@@ -3,6 +3,7 @@
 @section('content')
 <script src="{{ asset('js/formValidation.js') }}"></script>
 <div class="ContentsArea">
+    <a href="{{ route('user.profile') }}" class="TempBackButton">←戻る</a><!-- 佐藤：仮設定戻るボタン -->
     <h1>パスワード変更</h1>
     <form action="{{ route('user.password.update') }}" method="POST">
         @csrf

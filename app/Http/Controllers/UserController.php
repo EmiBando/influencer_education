@@ -9,12 +9,22 @@ class UserController extends Controller
 {
     public function userTop()
     {
-        return view('user_top');
+        return view('user.user_top');
+    }
+    
+    public function userProgress()
+    {
+        return view('user.user_progress');
+    }
+
+    public function userProfile()
+    {
+        return view('user.user_profile');
     }
 
     public function showUserTimetable()
     {
         $curriculums = Curriculum::all();
-        return view('user_timetable', ['curriculums' => $curriculums]);
+        return view('user.user_timetable', ['curriculums' => $curriculums]);
     }
 }

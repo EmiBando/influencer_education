@@ -10,99 +10,59 @@ use Illuminate\Support\Facades\DB;
 
 class BannerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $banners = Banner::all();
+        return view('admin.admin_banner', compact('banners'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
-{
-    // バリデーション
-    $request->validate([
-       'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
-    
-    // 画像をアップロードし、DBに保存する処理
-    if ($request->hasFile('image')) {
-        //$imagePath = $request->file('image')->store('banners', 'public');
-        $imagePath = $request->file('image')->store('public/banners');
+    {
+        $request->validate([
+            'image.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-        
-        // バナーモデルを作成し、画像パスを設定して保存
-        $banner = new Banner();
-        $banner->image = $imagePath;
-        $banner->save();
+        try {
+            DB::beginTransaction();
+
+            if ($request->hasFile('image')) {
+                foreach ($request->file('image') as $file) {
+                    $imagePath = $file->store('public/banners');
+                    
+                    $banner = new Banner();
+                    $banner->image = $imagePath;
+                    $banner->save();
+                }
+            }
+
+            DB::commit();
+
+            return redirect()->route('admin_top')->with('success', 'バナーが登録されました');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->route('admin_top')->with('error', 'バナーの登録中にエラーが発生しました: ' . $e->getMessage());
+        }
     }
 
-    // リダイレクトなどの適切な処理を行う
-    //return redirect()->back()->with('success', 'バナーが登録されました');
-    return redirect()->route('admin_top')->with('success', 'バナーが登録されました');
-    
-}
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Banner  $banner
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Banner $banner)
+    public function destroy($id)
     {
-        //
-    }
+        try {
+            DB::beginTransaction();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Banner  $banner
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Banner $banner)
-    {
-        //
-    }
+            $banner = Banner::findOrFail($id);
+            
+            if (Storage::exists($banner->image)) {
+                Storage::delete($banner->image);
+            }
+            
+            $banner->delete();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Banner  $banner
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Banner $banner)
-    {
-        //
-    }
+            DB::commit();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Banner  $banner
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Banner $banner)
-    {
-        //
+            return redirect()->route('admin_banner')->with('success', 'バナーが削除されました');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->route('admin_banner')->with('error', 'バナーの削除中にエラーが発生しました: ' . $e->getMessage());
+        }
     }
 }

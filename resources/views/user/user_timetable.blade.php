@@ -69,36 +69,19 @@
     
         <div class="col-lg-10">
             <div class="row justify-content-center" id="curriculumContainer">
-                @foreach($curriculums as $curriculum)
-                    @php
-                        $showCurriculum = false;
-                        $alwaysDeliveryFlg = $curriculum->always_delivery_flg;
-    
-                        // 配信時間の制限を確認
-                        foreach($curriculum->deliveryTimes as $deliveryTime) {
-                            $deliveryFrom = \Carbon\Carbon::parse($deliveryTime->delivery_from);
-                            $deliveryTo = \Carbon\Carbon::parse($deliveryTime->delivery_to);
-                            $currentDate = \Carbon\Carbon::parse($selectedDate);
-    
-                            if ($alwaysDeliveryFlg == 1 || ($currentDate->greaterThanOrEqualTo($deliveryFrom) && $currentDate->lessThanOrEqualTo($deliveryTo))) {
-                                $showCurriculum = true;
-                                break;
-                            }
-                        }
-                    @endphp
-    
-                    @if ($showCurriculum)
-                        <div class="col-sm-4 mb-5 mr-3">
-                            <div class="border p-3 h-100">
-                                <img src="{{ asset('storage/thumbnail/' . $curriculum->thumbnail) }}" alt="カリキュラムのサムネイル画像" class="img-fluid">
-                                <h2 class="mt-3 mb-2" style="font-size: 20px;">{{ $curriculum->title }}</h2>
-                                @foreach($curriculum->deliveryTimes as $deliveryTime)
-                                    <p class="mb-0">{{ $deliveryTime->delivery_from }} ~ {{ $deliveryTime->delivery_to }}</p>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-                @endforeach
+                
+            @foreach($curriculums as $curriculum)
+                <div class="col-sm-4 mb-5 mr-3">
+                    <div class="border p-3 h-100">
+                        <img src="{{ asset('storage/thumbnail/' . $curriculum->thumbnail) }}" alt="カリキュラムのサムネイル画像" class="img-fluid">
+                        <h2 class="mt-3 mb-2" style="font-size: 20px;">{{ $curriculum->title }}</h2>
+                        @foreach($curriculum->deliveryTimes as $deliveryTime)
+                            <p class="mb-0">{{ \Carbon\Carbon::parse($deliveryTime->delivery_from)->format('Y-m-d H:i') }} ~ {{ \Carbon\Carbon::parse($deliveryTime->delivery_to)->format('Y-m-d H:i') }}</p>
+                        @endforeach
+                    </div>
+                </div>
+            @endforeach
+
             </div>
         </div>
     </div>
@@ -114,9 +97,7 @@
             var currentGradeId = '{{ $currentGrade->id }}';
     
             // ページを更新する
-            var url = '{{ route("showCurriculumByDate", ["date" => "REPLACE_DATE", "gradeId" => "REPLACE_GRADE"]) }}'
-                .replace('REPLACE_DATE', newDate)
-                .replace('REPLACE_GRADE', currentGradeId);
+            var url = "{{ url('/user_timetable/date') }}" + '/' + newDate + '/grade/' + currentGradeId;
             window.location.href = url;
         }
     </script>

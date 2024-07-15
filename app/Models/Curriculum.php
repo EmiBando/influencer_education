@@ -20,4 +20,8 @@ class Curriculum extends Model
     public function author():BelongsToMany{
         return $this->belongsToMany(Author::class);
     }
+    public function Users(){
+        return $this->belongsToMany(User::class,'curriculum_progress','users_id','curriculums_id');
+    }
+
 }

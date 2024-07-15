@@ -19,7 +19,7 @@ class CurriculumSeeder extends Seeder
             'title'=>'カリキュラムタイトル',
             'thumbnail'=> '/storage/storage/img/thumbnail.jpg',
             'description'=>'カリキュラム説明文の本文です',
-            'video_url'=>'https://youtu.be/5vQU9DEMQIM?si=zTUS2dT1HmBU5lnR',
+            'video_url'=>'/storage/storage/img/sumple-movie.mp4',
             'always_delivery_flg'=>'1',
             'grade_id'=>'1'
         ]);

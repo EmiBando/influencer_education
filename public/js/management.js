@@ -10,6 +10,8 @@ $(function(){
     })
     .done(function() {
       console.log('通信成功');
+     
+
       let $result = $('#lavel-result');
       $result.empty(); //結果を一度クリア
       

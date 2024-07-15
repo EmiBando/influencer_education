@@ -30,7 +30,14 @@
           <button class="nav-btn">プロフィール設定</button>
         </div>
         <div class="col-1 "></div>
-        <div class="col-2 m-3 text-end"><button class="logout-btn">ログアウト</button></div>
+        <div class="col-2 m-3 text-end">
+          <!-- <button class="logout-btn">ログアウト</button> -->
+          <button class="logout-btn" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">ログアウト</button>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+        </div>
       </div>
       
     </nav>            

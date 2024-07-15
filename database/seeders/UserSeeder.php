@@ -33,11 +33,11 @@ class UserSeeder extends Seeder
 
         ]);
         User::create([
-            'name' => '三太郎',
-            'name_kana' => 'サンタロウ',
-            'email' => 'san@a.com',
+            'name' => '絵美',
+            'name_kana' => 'エミ',
+            'email' => 'emi@emi.jp',
             'profile_image' => 'aaa',
-            'password' => 'sansansan',
+            'password' => 'emiemiemi',
             'grade_id' => '1'
         ]);
     }

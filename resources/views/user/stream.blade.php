@@ -6,11 +6,19 @@
 <button type="button" onclick="history.back()" class="return-btn">←戻る</button>
 
 <div class="row"> 
-  <div class="col"><video class="movie" width="400" src="{{asset($curriculum->video_url)}}"></video></div>
-  <div class="col align-self-center text-center" id="lavel-result"><button class="label-btn" id="attendance">受講しました</button></div>
-  <!-- <button class="label-btn" onclick="location.href='{{route('lavel_chenge')}}'">受講しました</button> -->
+<div class="col"><video class="movie" width="400" src="{{asset($curriculum->video_url)}}" type="video/mp4" controls></video></div>
+  <div class="col align-self-center text-center" id="lavel-result">
+  
+    @if($curriculum_progress->clear_flg==0)
+    <button class="label-btn" id="attendance">受講しました</button>
+    @else
+    <button class="label-btn" id="attendance">受講済み</button>
+    @endif
+
+  </div>
+
 </div>
-<button class="test-btn">test</button>
+<!-- <button class="test-btn">test</button> -->
 
 <div class="grade">
   <p class="grade-icon">{{$curriculum->grade->name}}</p> 

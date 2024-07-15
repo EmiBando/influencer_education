@@ -22,6 +22,7 @@ class EducationController extends Controller
         $articles=Article::orderBy('id','desc')->limit(5)->get();
         return view('user/user_top',['banners'=>$banners,'articles'=>$articles,'user'=>$user]);
     }
+    
     public function stream(Request $request,User $user,Curriculum $curriculum,Grade $grade,Curriculum_progress $curriculum_progress):View{
         // $curriculums=Curriculum::all();
         $user=Auth::id();

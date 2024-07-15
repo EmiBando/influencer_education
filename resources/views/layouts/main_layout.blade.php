@@ -25,7 +25,7 @@
     <nav id="main_head">
       <div class="row justfy-content-between">
         <div class="col-8 my-3 ms-4">
-          <button class="nav-btn">時間割</button>
+          <button class="nav-btn" onclick="location.href='{{route('userTimetable')}}'">時間割</button>
           <button class="nav-btn">授業進捗</button>
           <button class="nav-btn">プロフィール設定</button>
         </div>

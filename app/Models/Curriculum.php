@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\Curriculum;
 use App\Models\Grade;
+use Illuminate\Support\Facades\DB;
 
 class Curriculum extends Model
 {
@@ -22,6 +23,15 @@ class Curriculum extends Model
     }
     public function Users(){
         return $this->belongsToMany(User::class,'curriculum_progress','users_id','curriculums_id');
+    }
+    public function userTimetable()
+    {
+        return DB::table('curriculums')->get();
+    }
+
+    public function deliveryTimes()
+    {
+        return $this->hasMany(DeliveryTime::class, 'curriculums_id');
     }
 
 }

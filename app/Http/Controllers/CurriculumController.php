@@ -12,18 +12,30 @@ class CurriculumController extends Controller
     public function userTimetable()
     {
         $initialGradeId = 1;
-        $date = now()->format('Y-m-d'); // 現在の日付を取得
+        $date = now()->format('Y-m-d');
         $startOfMonth = Carbon::parse($date)->startOfMonth()->format('Y-m-d');
         $endOfMonth = Carbon::parse($date)->endOfMonth()->format('Y-m-d');
+        $today = Carbon::today()->format('Y-m-d');
 
         $curriculums = Curriculum::where('grade_id', $initialGradeId)
-                             ->whereHas('deliveryTimes', function ($query) use ($startOfMonth, $endOfMonth) {
-                                 $query->whereBetween('delivery_from', [$startOfMonth, $endOfMonth]);
-                             })
-                             ->with(['deliveryTimes' => function($query) use ($startOfMonth, $endOfMonth) {
-                                 $query->whereBetween('delivery_from', [$startOfMonth, $endOfMonth]);
-                             }])
-                             ->get();
+            ->where(function ($query) use ($startOfMonth, $endOfMonth, $today) {
+                $query->where('always_delivery_flg', 1)
+                    ->orWhere(function ($query) use ($startOfMonth, $endOfMonth, $today) {
+                        $query->whereHas('deliveryTimes', function ($query) use ($startOfMonth, $endOfMonth, $today) {
+                            $query->where('delivery_from', '<=', $endOfMonth)
+                                ->where('delivery_to', '>=', $startOfMonth)
+                                ->where('delivery_from', '<=', $today)
+                                ->where('delivery_to', '>=', $today);
+                        });
+                    });
+            })
+            ->with(['deliveryTimes' => function($query) use ($startOfMonth, $endOfMonth, $today) {
+                $query->where('delivery_from', '<=', $endOfMonth)
+                    ->where('delivery_to', '>=', $startOfMonth)
+                    ->where('delivery_from', '<=', $today)
+                    ->where('delivery_to', '>=', $today);
+            }])
+            ->get();
 
         $grades = Grade::all();
         $currentGrade = Grade::find($initialGradeId);
@@ -32,21 +44,31 @@ class CurriculumController extends Controller
         return view('user.user_timetable', compact('curriculums', 'grades', 'currentGrade', 'selectedDate'));
     }
 
-
-    public function showCurriculumByGrade($gradeId)
+    public function showCurriculumByGrade($gradeId, $date)
     {
-        $date = now()->format('Y-m-d'); // 現在の日付を取得
         $startOfMonth = Carbon::parse($date)->startOfMonth()->format('Y-m-d');
         $endOfMonth = Carbon::parse($date)->endOfMonth()->format('Y-m-d');
+        $today = Carbon::today()->format('Y-m-d');
 
         $curriculums = Curriculum::where('grade_id', $gradeId)
-                             ->whereHas('deliveryTimes', function ($query) use ($startOfMonth, $endOfMonth) {
-                                 $query->whereBetween('delivery_from', [$startOfMonth, $endOfMonth]);
-                             })
-                             ->with(['deliveryTimes' => function($query) use ($startOfMonth, $endOfMonth) {
-                                 $query->whereBetween('delivery_from', [$startOfMonth, $endOfMonth]);
-                             }])
-                             ->get();
+            ->where(function ($query) use ($startOfMonth, $endOfMonth, $today) {
+                $query->where('always_delivery_flg', 1)
+                    ->orWhere(function ($query) use ($startOfMonth, $endOfMonth, $today) {
+                        $query->whereHas('deliveryTimes', function ($query) use ($startOfMonth, $endOfMonth, $today) {
+                            $query->where('delivery_from', '<=', $endOfMonth)
+                                ->where('delivery_to', '>=', $startOfMonth)
+                                ->where('delivery_from', '<=', $today)
+                                ->where('delivery_to', '>=', $today);
+                        });
+                    });
+            })
+            ->with(['deliveryTimes' => function ($query) use ($startOfMonth, $endOfMonth, $today) {
+                $query->where('delivery_from', '<=', $endOfMonth)
+                    ->where('delivery_to', '>=', $startOfMonth)
+                    ->where('delivery_from', '<=', $today)
+                    ->where('delivery_to', '>=', $today);
+            }])
+            ->get();
 
         $grades = Grade::all();
         $currentGrade = Grade::find($gradeId);
@@ -55,46 +77,36 @@ class CurriculumController extends Controller
         return view('user.user_timetable', compact('curriculums', 'grades', 'currentGrade', 'selectedDate'));
     }
 
-
-    public function showCurriculumByDate(Request $request, $date)
+    public function showCurriculumByDate($date, $gradeId)
     {
-        $gradeId = $request->input('gradeId', 1); // デフォルトは1
         $startOfMonth = Carbon::parse($date)->startOfMonth()->format('Y-m-d');
         $endOfMonth = Carbon::parse($date)->endOfMonth()->format('Y-m-d');
+        $today = Carbon::today()->format('Y-m-d');
 
         $curriculums = Curriculum::where('grade_id', $gradeId)
-                             ->whereHas('deliveryTimes', function ($query) use ($startOfMonth, $endOfMonth) {
-                                 $query->whereBetween('delivery_from', [$startOfMonth, $endOfMonth]);
-                             })
-                             ->with(['deliveryTimes' => function($query) use ($startOfMonth, $endOfMonth) {
-                                 $query->whereBetween('delivery_from', [$startOfMonth, $endOfMonth]);
-                             }])
-                             ->get();
+            ->where(function ($query) use ($startOfMonth, $endOfMonth, $today) {
+                $query->where('always_delivery_flg', 1)
+                    ->orWhere(function ($query) use ($startOfMonth, $endOfMonth, $today) {
+                        $query->whereHas('deliveryTimes', function ($query) use ($startOfMonth, $endOfMonth, $today) {
+                            $query->where('delivery_from', '<=', $endOfMonth)
+                                ->where('delivery_to', '>=', $startOfMonth)
+                                ->where('delivery_from', '<=', $today)
+                                ->where('delivery_to', '>=', $today);
+                        });
+                    });
+            })
+            ->with(['deliveryTimes' => function ($query) use ($startOfMonth, $endOfMonth, $today) {
+                $query->where('delivery_from', '<=', $endOfMonth)
+                    ->where('delivery_to', '>=', $startOfMonth)
+                    ->where('delivery_from', '<=', $today)
+                    ->where('delivery_to', '>=', $today);
+            }])
+            ->get();
 
         $grades = Grade::all();
-        $currentGrade = Grade::find($gradeId); // 選択された学年を取得
+        $currentGrade = Grade::find($gradeId);
         $selectedDate = Carbon::parse($date)->format('Y-m-d');
 
         return view('user.user_timetable', compact('curriculums', 'grades', 'currentGrade', 'selectedDate'));
-    }
-
-    public function getSchedule(Request $request)
-    {
-        $date = $request->input('date');
-        $gradeId = $request->input('gradeId');
-
-        $startOfMonth = Carbon::parse($date)->startOfMonth()->format('Y-m-d');
-        $endOfMonth = Carbon::parse($date)->endOfMonth()->format('Y-m-d');
-
-        $curriculums = Curriculum::where('grade_id', $gradeId)
-                                 ->whereHas('deliveryTimes', function ($query) use ($startOfMonth, $endOfMonth) {
-                                     $query->whereBetween('delivery_from', [$startOfMonth, $endOfMonth]);
-                                 })
-                                 ->with(['deliveryTimes' => function($query) use ($startOfMonth, $endOfMonth) {
-                                     $query->whereBetween('delivery_from', [$startOfMonth, $endOfMonth]);
-                                 }])
-                                 ->get();
-
-        return response()->json(['curriculums' => $curriculums]);
     }
 }

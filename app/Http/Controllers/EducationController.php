@@ -35,11 +35,12 @@ class EducationController extends Controller
         return view('user/stream',['curriculum'=>$curriculum,'grade'=>$grade,'user'=>$user,'curriculum_progress'=>$curriculum_progress]);
     }
     public function lavel_chenge(Request $request,User $user,Curriculum_progress $curriculum_progress){
+        
         $user_id=Auth::id();
 
         $curriculum=Curriculum::find(1);
   
-        $curriculum_progress=Curriculum_progress::where('users_id',$user)->where('curriculums_id',$curriculum->id)->first();
+        $curriculum_progress=Curriculum_progress::where('users_id',$user_id)->where('curriculums_id',$curriculum->id)->first();
       
         try{
             DB::beginTransaction();

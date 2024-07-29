@@ -14,13 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('curriculums', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->string('thumbnail');
-            $table->text('description');
-            $table->text('video_url');
-            $table->integer('always_delivery_flg');
-            $table->foreignId('grade_id')->constrained('grades');
+            $table->id(); //ID
+            $table->string('title'); //タイトル
+            $table->string('thumbnail')->nullable(); //サムネイル画像
+            $table->text('description')->nullable(); //説明
+            $table->text('video_url')->nullable(); //ビデオURL
+            $table->integer('always_delivery_flg')->nullable(); //フラグ
+            $table->foreignId('grade_id'); //grade_ID
             $table->timestamps();
         });
     }

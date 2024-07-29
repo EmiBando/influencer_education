@@ -24,16 +24,19 @@ class CurriculumController extends Controller
                         $query->whereHas('deliveryTimes', function ($query) use ($startOfMonth, $endOfMonth, $today) {
                             $query->where('delivery_from', '<=', $endOfMonth)
                                 ->where('delivery_to', '>=', $startOfMonth)
-                                ->where('delivery_from', '<=', $today)
-                                ->where('delivery_to', '>=', $today);
+                                //->where('delivery_from', '<=', $today)
+                                //->where('delivery_to', '>=', $today)
+                                ;
                         });
                     });
             })
+            
             ->with(['deliveryTimes' => function($query) use ($startOfMonth, $endOfMonth, $today) {
                 $query->where('delivery_from', '<=', $endOfMonth)
                     ->where('delivery_to', '>=', $startOfMonth)
-                    ->where('delivery_from', '<=', $today)
-                    ->where('delivery_to', '>=', $today);
+                    //->where('delivery_from', '<=', $today)
+                    //->where('delivery_to', '>=', $today)
+                    ;
             }])
             ->get();
 
@@ -57,8 +60,9 @@ class CurriculumController extends Controller
                         $query->whereHas('deliveryTimes', function ($query) use ($startOfMonth, $endOfMonth, $today) {
                             $query->where('delivery_from', '<=', $endOfMonth)
                                 ->where('delivery_to', '>=', $startOfMonth)
-                                ->where('delivery_from', '<=', $today)
-                                ->where('delivery_to', '>=', $today);
+                                //->where('delivery_from', '<=', $today)
+                                //->where('delivery_to', '>=', $today)
+                                ;
                         });
                     });
             })
@@ -90,16 +94,18 @@ class CurriculumController extends Controller
                         $query->whereHas('deliveryTimes', function ($query) use ($startOfMonth, $endOfMonth, $today) {
                             $query->where('delivery_from', '<=', $endOfMonth)
                                 ->where('delivery_to', '>=', $startOfMonth)
-                                ->where('delivery_from', '<=', $today)
-                                ->where('delivery_to', '>=', $today);
+                                //->where('delivery_from', '<=', $today)
+                                //->where('delivery_to', '>=', $today)
+                                ;
                         });
                     });
             })
             ->with(['deliveryTimes' => function ($query) use ($startOfMonth, $endOfMonth, $today) {
                 $query->where('delivery_from', '<=', $endOfMonth)
                     ->where('delivery_to', '>=', $startOfMonth)
-                    ->where('delivery_from', '<=', $today)
-                    ->where('delivery_to', '>=', $today);
+                    //->where('delivery_from', '<=', $today)
+                    //->where('delivery_to', '>=', $today)
+                    ;
             }])
             ->get();
 
